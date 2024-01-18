@@ -36,7 +36,7 @@ public class CajeroAutomatico {
             System.out.print("\n\n---            BANCO CENTRAL            ---\n\n");
         }
         //BONUS: El sistema usa lenguaje inclusivx!!
-        System.out.println("Bienvenid@, " + clienteActual.nombre + "\nTu saldo es: " + redondearYPresentar(clienteActual.dineroEnCuenta));
+        System.out.println("Bienvenid@, " + clienteActual.getNombre() + "\nTu saldo es: " + CalculoCajero.redondearYPresentar(clienteActual.getDineroEnCuenta()));
         pedirInput("\n\n¿Qué servicio requieres realizar? (Ingresar el número de acuerdo con la siguiente lista) \n" + 
                    "RETIRO --- 1\n"+
                    "TRANSFERENCIA --- 2\n" +
@@ -60,7 +60,7 @@ public class CajeroAutomatico {
     public static void pedirPin() { 
         while(true){
         pedirInput("Ingresa tu número de pin de 4 dígitos", "int", 4);
-        if (respInt == clienteActual.PIN){
+        if (respInt == clienteActual.getPIN()){
             break;
         }
         System.out.println("PIN Incorrecto. Intenta de nuevo.");
@@ -70,12 +70,12 @@ public class CajeroAutomatico {
     public static void retiro(){
         System.out.println("\n\n---RETIRO---");
         pedirInput("Ingresa la cantidad que deseas retirar en moneda nacional", "double", 0);
-        pedirInput("¿Estás segur@ que deseas retirar " + redondearYPresentar(respDouble)  + " ? \nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
+        pedirInput("¿Estás segur@ que deseas retirar " + CalculoCajero.redondearYPresentar(respDouble)  + " ? \nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
         if (respBoolean){
             try{
                 clienteActual.reducirSaldoEn(respDouble);
-                barraDeProgreso("DESPACHANDO EFECTIVO", 200);
-                System.out.println("Has retirado " + redondearYPresentar(respDouble) + " de tu cuenta de ahorros.");
+                CalculoCajero.barraDeProgreso("DESPACHANDO EFECTIVO", 200);
+                System.out.println("Has retirado " + CalculoCajero.redondearYPresentar(respDouble) + " de tu cuenta de ahorros.");
                 System.out.println("NO OLVIDES RECOGER TU DINERO.");
                 donacion();
                 clienteActual.imprimirSaldo();
@@ -109,28 +109,29 @@ public class CajeroAutomatico {
         }
         pedirInput("Ingresa tu número de cuenta de 10 dígitos", "long", 10);
         pedirInput("Ingresa la cantidad que deseas transferir en moneda nacional", "double", 0);
+
         switch(respInt){
-            case 1: pedirInput("¿Estás segur@ que deseas transferir " + redondearYPresentar(respDouble) + " a la cuenta "  + respLong +  " del BANCO CENTRAL? (LIBRE DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
+            case 1: pedirInput("¿Estás segur@ que deseas transferir " + CalculoCajero.redondearYPresentar(respDouble) + " a la cuenta "  + respLong +  " del BANCO CENTRAL? (LIBRE DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
                     comision = 0.0;
                     break;
-            case 2: pedirInput("¿Estás segur@ que deseas transferir "+ redondearYPresentar(respDouble)+  " a la cuenta " + respLong + " del BANCO LATERAL? (LIBRE DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
+            case 2: pedirInput("¿Estás segur@ que deseas transferir "+ CalculoCajero.redondearYPresentar(respDouble)+  " a la cuenta " + respLong + " del BANCO LATERAL? (LIBRE DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
                     comision = 0.0;
                     break;
-            case 3: pedirInput("¿Estás segur@ que deseas transferir "+ redondearYPresentar(respDouble)  + " a la cuenta " + respLong +  " del BANCO GARZA? (SE COBRARÁ 3 % DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
+            case 3: pedirInput("¿Estás segur@ que deseas transferir "+ CalculoCajero.redondearYPresentar(respDouble)  + " a la cuenta " + respLong +  " del BANCO GARZA? (SE COBRARÁ 3 % DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
                     comision =0.03;
                     break;
-            case 4: pedirInput("¿Estás segur@ que deseas transferir "+ redondearYPresentar(respDouble)+  " a la cuenta " + respLong +  " del BANCO LAGÜERA? (SE COBRARÁ 25 % DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
+            case 4: pedirInput("¿Estás segur@ que deseas transferir "+ CalculoCajero.redondearYPresentar(respDouble)+  " a la cuenta " + respLong +  " del BANCO LAGÜERA? (SE COBRARÁ 25 % DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
                     comision =0.25;
                     break;
-            case 5: pedirInput("¿Estás segur@ que deseas transferir " + redondearYPresentar(respDouble)  + " a la cuenta " + respLong +  " del BANCO LAGÜERA? (SE COBRARÁ 360 % DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
+            case 5: pedirInput("¿Estás segur@ que deseas transferir " + CalculoCajero.redondearYPresentar(respDouble)  + " a la cuenta " + respLong +  " del BANCO LAGÜERA? (SE COBRARÁ 360 % DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
                     comision =3.6;
                     break;
         }
         if (respBoolean){
             try{
                 clienteActual.reducirSaldoEn(respDouble* (1+comision));
-                barraDeProgreso("REALIZANDO TRANSFERENCIA", 120);
-                System.out.println("Has transferido " + redondearYPresentar(respDouble) + " a la cuenta " + respLong);
+                CalculoCajero.barraDeProgreso("REALIZANDO TRANSFERENCIA", 120);
+                System.out.println("Has transferido " + CalculoCajero.redondearYPresentar(respDouble) + " a la cuenta " + respLong);
                 donacion();
                 clienteActual.imprimirSaldo();
                 regresarAMenu();
@@ -176,22 +177,24 @@ public class CajeroAutomatico {
         }
         }while(respInt<1 || respInt >4);
         respDouble = dic.get(respInt);
+
+
         switch(compania){
-            case 1: pedirInput("¿Estás segur@ que deseas recargar " + redondearYPresentar(respDouble) + " al número "  + respLong +  " de TELICENTRAL (LIBRE DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
+            case 1: pedirInput("¿Estás segur@ que deseas recargar " + CalculoCajero.redondearYPresentar(respDouble) + " al número "  + respLong +  " de TELICENTRAL (LIBRE DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
                     comision = 0.0;
                     break;
-            case 2: pedirInput("¿Estás segur@ que deseas recargar "+ redondearYPresentar(respDouble) +  " a la cuenta " + respLong + " de TEC-TEL? (SE COBRARÁ 8.3% DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
+            case 2: pedirInput("¿Estás segur@ que deseas recargar "+ CalculoCajero.redondearYPresentar(respDouble) +  " a la cuenta " + respLong + " de TEC-TEL? (SE COBRARÁ 8.3% DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
                     comision = 0.083;
                     break;
-            case 3: pedirInput("¿Estás segur@ que deseas recargar "+ redondearYPresentar(respDouble)   + " a la cuenta " + respLong +  " de TELANCE? (SE COBRARÁ 29.2 % DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
+            case 3: pedirInput("¿Estás segur@ que deseas recargar "+ CalculoCajero.redondearYPresentar(respDouble)   + " a la cuenta " + respLong +  " de TELANCE? (SE COBRARÁ 29.2 % DE COMISIÓN)\nPRESIONA CUALQUIER TECLA PARA CONTINUAR o '0' si deseas cancelar la operación", "boolean", 0);
                     comision =0.292;
                     break;
         }
         if (respBoolean){
             try{
                 clienteActual.reducirSaldoEn(respDouble* (1+comision));
-                barraDeProgreso("REALIZANDO RECARGA", 120);
-                System.out.println("Has RECARGADO " + redondearYPresentar(respDouble) + " al número " + respLong);
+                CalculoCajero.barraDeProgreso("REALIZANDO RECARGA", 120);
+                System.out.println("Has RECARGADO " + CalculoCajero.redondearYPresentar(respDouble) + " al número " + respLong);
                 donacion();
                 clienteActual.imprimirSaldo();
                 regresarAMenu();
@@ -220,15 +223,7 @@ public class CajeroAutomatico {
     //Trata de forzar a un tipo de dato. Si hay una excepción, quiere decir que no es el tipo de dato correcto o tiene algo mal
     public static Boolean esDeTipo(String tipo, String prueba) {
         try {
-            if (tipo.equalsIgnoreCase("float")) {
-                Float.parseFloat(prueba);
-            } else if (tipo.equalsIgnoreCase("int")) {
-                Integer.parseInt(prueba);
-            } else if (tipo.equalsIgnoreCase("double")) {
-                Double.parseDouble(prueba);
-            }else if(tipo.equalsIgnoreCase("long")){
-                Long.parseLong(prueba);
-            }
+            Number n = validacion(tipo, prueba);
             return true;
         } catch(Exception e) {
             return false;
@@ -245,18 +240,21 @@ public class CajeroAutomatico {
             System.out.println(pregunta);
             userInp = lector.nextLine().replaceAll("\\s+","");
             if (!esDeTipo(tipoDeDato, userInp)) {
-                //Error de tipo
                 error = true;
-                System.err.println("Error: Dato inválido. Intenta de nuevo.");
+                throw new RuntimeException("Error: Dato inválido. Intenta de nuevo.");
             } else if (userInp.length() != largo && largo!=0) {
-                //Error de largo
                 error = true;
-                System.err.println("Error: Ingresa el número correcto de caracteres. Intenta de nuevo.");
+                throw new RuntimeException("Error: Ingresa el número correcto de caracteres. Intenta de nuevo.");
             } else {
                 error = false;
             }
-        } while (error == true); //Se ejecuta hasta que error=false
-        //Se almacena en la variable, dependiendo el caso. Se evita el 100% de excepciones debido a otro tipo de dato
+        } while (error == true);
+
+        cambiosDatos(tipoDeDato, userInp, pregunta, largo);
+
+    }
+
+    public static void cambiosDatos(String tipoDeDato, String userInp, String pregunta, int largo){
         if (tipoDeDato.equalsIgnoreCase("float")){
             respFloat = Float.parseFloat(userInp);
         } else if(tipoDeDato.equalsIgnoreCase("double")){
@@ -272,40 +270,27 @@ public class CajeroAutomatico {
         } else if (tipoDeDato.equalsIgnoreCase("long")){
             respLong = Long.parseLong(userInp);
         }
+
         if (respDouble<0 || respInt <0 || respLong <0){
-                System.err.println("Error: Dato inválido. No se permiten negativos. Intenta de nuevo.");
-                pedirInput(pregunta, tipoDeDato, largo);
-            }
-    }
-    
-    //Barra de progreso. Meramente estética.
-    //mensajeDeCarga: String. Aparece un mensaje especificando el proceso. 
-    //miliSegPorChar: Long. Especifica cuántos milisegundos se tarda en actualizar al BufferString
-    public static void barraDeProgreso(String mensajeDeCarga, long miliSegPorChar){
-        System.out.print("\n\n");
-        System.out.println(mensajeDeCarga + "\n");
-        StringBuffer anim = new StringBuffer(30);
-        for (int i = 0; i < 30; i++){
-                anim.append(" ");
+            System.err.println("Error: Dato inválido. No se permiten negativos. Intenta de nuevo.");
+            pedirInput(pregunta, tipoDeDato, largo);
         }
-        for (int x =0 ; x < 30 ; x++) {
-            anim.setCharAt(x, '\u25A0'); //Código para un recuadro negro
-            double porcentaje = (double)(x+1)*10/3;
-            porcentaje = Math.round(porcentaje*10.0)/10.0;
-            String data =  "\r"+ "|" +  anim.toString() + "|" + " "  + porcentaje + "%" ;
-            try{
-                System.out.write(data.getBytes());
-                Thread.sleep(miliSegPorChar);
-            }
-            catch (InterruptedException e1) {
-                System.out.println(e1.getMessage());
-            }
-            catch (IOException e2) {
-                System.out.println(e2.getMessage());
-            }
-        }
-        System.out.print("\n\n");
     }
+
+    public static Number validacion(String tipo, String prueba){
+        Number n = 0;
+        if (tipo.equalsIgnoreCase("float")) {
+            n = Float.parseFloat(prueba);
+        } else if (tipo.equalsIgnoreCase("int")) {
+            n = Integer.parseInt(prueba);
+        } else if (tipo.equalsIgnoreCase("double")) {
+            n = Double.parseDouble(prueba);
+        }else if(tipo.equalsIgnoreCase("long")){
+            n = Long.parseLong(prueba);
+        }
+        return n;
+    }
+
     //Ejecuta el main() nuevamente o termina el programa
     public static void regresarAMenu(){
         pedirInput("(Pulsa cualquier tecla para SALIR o '0' para volver al menú)", "boolean", 0);
@@ -316,15 +301,8 @@ public class CajeroAutomatico {
             String[] args = {};
             CajeroAutomatico.main(args);
         }
-        
+
     }
 
-    //Presenta en formato de moneda un número
-    //@param num: double. Numero a convertir
-    public static String redondearYPresentar(double num){
-        num = Math.round(num*100.0)/100.0;
-        return String.format("$"+"%.2f", num);
-    }
+
 }
-
-    //opfiejfiefeoifjnwoenfw
